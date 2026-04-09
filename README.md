@@ -1,5 +1,18 @@
 # Spire Deck Builder
 
+## Projektisuunnitelma
+
+- Aihe: Slay the Spire -henkisen deck builderin backend-palvelu.
+- Erityishuomio: Toteutetaan AI-avusteisesti.
+- Käytettävä sovelluskehys: FastAPI (REST) + GraphQL-tuki.
+- Käytetty tietovarasto:
+  - JSON-tiedostot pelidatan lähteenä.
+  - SQLite käyttäjien ja dekkien pysyvään tallennukseen.
+- Lisäominaisuudet:
+  - GraphQL-rajapinta RESTin rinnalla.
+  - Dekkien analytiikka (adjusted DPT/BPT).
+  - Korttialias-resoluutio käytettävyyden parantamiseen.
+
 ## Yleiskuva
 Spire Deck Builder on FastAPI-pohjainen backend-sovellus, joka tarjoaa Slay the Spire -teemaiseen deck builderiin liittyvät API-toiminnot.
 
@@ -8,6 +21,51 @@ Projekti sisältää:
 - GraphQL API:n (`/graphql`, toteutus `app/graphql_api.py`)
 - SQLite-pohjaisen persistenssin (`app/db.py`)
 - Kortti- ja hahmodatan JSON-tiedostoista (`data/*.json`)
+
+## Projektin rakenne
+
+```text
+spire-deck-builder/
+|
++-- .github/
+|   +-- copilot-instructions.md
+|   +-- instructions/
+|   |   +-- api.instructions.md
+|   |   +-- tests.instructions.md
+|   +-- prompts/
+|       +-- add-endpoint.prompt.md
+|
++-- app/
+|   +-- api.py
+|   +-- db.py
+|   +-- deck_logic.py
+|   +-- dependencies.py
+|   +-- graphql_api.py
+|   +-- loader.py
+|   +-- init.py
+|
++-- data/
+|   +-- cards.json
+|   +-- characters.json
+|   +-- enchantments.json
+|   +-- keywords.json
+|   +-- modifiers.json
+|   +-- orbs.json
+|   +-- powers.json
+|   +-- relics.json
+|
++-- tests/
+|   +-- conftest.py
+|   +-- test_analysis.py
+|   +-- test_api.py
+|   +-- test_graphql.py
+|   +-- test_loader.py
+|
++-- main.py
++-- pytest.ini
++-- requirements.txt
++-- README.md
+```
 
 ## Asennus ja ajo
 
@@ -165,61 +223,3 @@ pytest -k graphql
 - Turvallisuusparannukset (avaimen hash, rotaatio, rate limiting).
 - Suorituskykyoptimointi suuremmille datamäärille.
 - Lisätestit harvinaisille reunaehdoille.
-
-## Projektisuunnitelma
-
-- Aihe: Slay the Spire -henkisen deck builderin backend-palvelu.
-- Erityishuomio: Toteutetaan AI-avusteisesti.
-- Käytettävä sovelluskehys: FastAPI (REST) + GraphQL-tuki.
-- Käytetty tietovarasto:
-  - JSON-tiedostot pelidatan lähteenä.
-  - SQLite käyttäjien ja dekkien pysyvään tallennukseen.
-- Lisäominaisuudet:
-  - GraphQL-rajapinta RESTin rinnalla.
-  - Dekkien analytiikka (adjusted DPT/BPT).
-  - Korttialias-resoluutio käytettävyyden parantamiseen.
-
-## Projektin rakenne
-
-```text
-spire-deck-builder/
-|
-+-- .github/
-|   +-- copilot-instructions.md
-|   +-- instructions/
-|   |   +-- api.instructions.md
-|   |   +-- tests.instructions.md
-|   +-- prompts/
-|       +-- add-endpoint.prompt.md
-|
-+-- app/
-|   +-- api.py
-|   +-- db.py
-|   +-- deck_logic.py
-|   +-- dependencies.py
-|   +-- graphql_api.py
-|   +-- loader.py
-|   +-- init.py
-|
-+-- data/
-|   +-- cards.json
-|   +-- characters.json
-|   +-- enchantments.json
-|   +-- keywords.json
-|   +-- modifiers.json
-|   +-- orbs.json
-|   +-- powers.json
-|   +-- relics.json
-|
-+-- tests/
-|   +-- conftest.py
-|   +-- test_analysis.py
-|   +-- test_api.py
-|   +-- test_graphql.py
-|   +-- test_loader.py
-|
-+-- main.py
-+-- pytest.ini
-+-- requirements.txt
-+-- README.md
-```
