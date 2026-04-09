@@ -421,18 +421,19 @@ class Mutation:
 schema = strawberry.Schema(
     query=Query,
     mutation=Mutation,
+    # GraphQL-kenttien nimet pysyvät snake_case-muodossa, eivätkä muutu camelCaseksi automaattisesti. 
     config=StrawberryConfig(auto_camel_case=False),
 )
 
-
+# FastAPI:n Request-objekti lisätään GraphQL:än kontekstiin, josta on luettavissa mm. HTTP-headerit, kuten API key.
 def get_context(request: Request):
     return {"request": request}
-
 
 graphql_router = GraphQLRouter(schema, context_getter=get_context)
 
 
 def _require_api_key(info) -> str:
+    # Strawberryn antama resolver-olion parametri, jonka kautta context luetaann. Contextiin on lisätty FastAPI:n Request-objekti, josta voidaan hakea headerit.
     request = info.context["request"]
     api_key = request.headers.get("X-API-Key")
     if not is_valid_api_key(api_key):

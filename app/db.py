@@ -6,6 +6,7 @@ DB_PATH = Path(os.environ.get("DECKS_DB_PATH", "spiredb.db"))
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)
+    # sqlite3.Row mahdollistaa rivien käsittelyn sanakirjamaisina olioina, jolloin sarakkeisiin pääsee käsiksi nimillä esim. row["api_key"] 
     conn.row_factory = sqlite3.Row
     return conn
 

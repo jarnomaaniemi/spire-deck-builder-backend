@@ -101,6 +101,8 @@ protected_router = APIRouter(dependencies=[Security(require_api_key)])
 # PUBLIC ENDPOINTS 
 # -----------------
 
+# Decorators define the path and operation for this endpoint
+# https://fastapi.tiangolo.com/tutorial/first-steps/#define-a-path-operation-decorator
 @public_router.post("/auth/register", tags=["Auth"])
 def register():
     api_key = str(uuid4())
@@ -155,31 +157,6 @@ def get_character_deck(char_id: str):
         "deck": resolved_ids,
         "stats": stats
     }
-
-
-# @protected_router.get("/cards")
-# def list_cards():
-#     return [
-#         {
-#             "id": cid,
-#             "name": c.get("name"),
-#             "type": c.get("type"),
-#             "rarity": c.get("rarity"),
-#             "color": c.get("color"),
-#             "cost": c.get("cost"),
-#         }
-#         for cid, c in cards.items()
-#     ]
-
-
-# @protected_router.get("/cards/{card_id}")
-# def get_card(card_id: str):
-#     cid = card_id.upper()
-#     card = cards.get(cid)
-#     if not card:
-#         raise HTTPException(status_code=404, detail="Card not found")
-#     return {"id": cid, **card}
-
 
 @public_router.get("/search/cards", tags=["Search"])
 def search_cards(
