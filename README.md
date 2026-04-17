@@ -14,9 +14,11 @@
   - Korttialias-resoluutio.
 
 ## Yleiskuva
+
 Spire Deck Builder on FastAPI-pohjainen backend-sovellus, joka tarjoaa Slay the Spire -teemaiseen deck builderiin liittyvät API-toiminnot.
 
 Projekti sisältää:
+
 - REST API:n (`app/api.py`)
 - GraphQL API:n (`/graphql`, toteutus `app/graphql_api.py`)
 - SQLite-pohjaisen persistenssin (`app/db.py`)
@@ -76,26 +78,29 @@ python -m venv venv
 & venv\Scripts\Activate.ps1
 ```
 
-2. Asenna riippuvuudet:
+1. Asenna riippuvuudet:
 
 ```powershell
 pip install -r requirements.txt
 ```
 
-3. Käynnistä sovellus:
+1. Käynnistä sovellus:
 
 ```powershell
 uvicorn main:app --reload
 ```
 
 Tämän jälkeen:
+
 - REST-dokumentaatio: `http://localhost:8000/docs`
 - GraphQL-käyttöliittymä: `http://localhost:8000/graphql`
 
 ## API-yhteenveto
 
 ### REST
+
 Julkiset endpointit:
+
 - `POST /auth/register`
 - `GET /auth/me`
 - `GET /characters`
@@ -103,6 +108,7 @@ Julkiset endpointit:
 - `GET /search/cards`
 
 Suojatut endpointit (header `X-API-Key`):
+
 - `POST /deck/create`
 - `GET /decks`
 - `GET /deck/{pack_id}`
@@ -110,26 +116,31 @@ Suojatut endpointit (header `X-API-Key`):
 - `DELETE /deck/{pack_id}/card/{card_id}`
 
 ### GraphQL
+
 Endpoint: `POST /graphql` (GraphiQL UI samassa osoitteessa)
 
 GraphQL tarjoaa vastaavat toiminnot kuin REST:
+
 - Queryt: `characters`, `character_deck`, `search_cards`, `me`, `decks`, `deck`
 - Mutationit: `register`, `create_deck`, `add_card_to_deck`, `remove_card_from_deck`
 
 Huomio: GraphQL-schemassa on snake_case-kenttänimet (`auto_camel_case=False`).
 
 ## API-avain ja autentikointi
+
 - API-avain luodaan `POST /auth/register` tai GraphQL `register`-mutaatiolla.
 - Suojatut reitit vaativat `X-API-Key`-headerin.
 - Avain validoidaan `users`-taulusta (`app/dependencies.py`).
 
 ### Validointiperiaatteet
+
 - Header-validointi: suojatut endpointit käyttävät `require_api_key`-riippuvuutta.
 - Runkojen validointi: `DeckCreateRequest` ja `DeckAddRequest` (Pydantic) varmistavat perusrakenteen.
 - Domain-validointi: hahmo- ja kortti-ID:t tarkistetaan ennen operaatioita.
 - Kanonisointi: käyttäjän syötteestä voidaan hyväksyä alias, joka resolvoidaan kanoniseen kortti-ID:hen.
 
 ### Tyypilliset virhetilanteet
+
 - `403 Forbidden`: API-avain puuttuu tai on virheellinen.
 - `404 Not Found`: tuntematon hahmo, pakka tai kortti.
 - `422 Unprocessable Entity`: JSON-runko ei vastaa Pydantic-mallia.
@@ -143,6 +154,7 @@ Virhevastausten muoto noudattaa FastAPI:n `HTTPException`-rakennetta, esimerkiks
 ```
 
 ## Tietokantamalli (SQLite)
+
 `app/db.py` luo taulut:
 
 - `users`
@@ -187,6 +199,7 @@ Mahdolliset jatkoparannukset:
 ## Testaus
 
 Testit:
+
 - `tests/test_loader.py`
 - `tests/test_analysis.py`
 - `tests/test_api.py`
