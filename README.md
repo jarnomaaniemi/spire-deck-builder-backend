@@ -2,7 +2,7 @@
 
 ## Projektisuunnitelma
 
-- Aihe: Slay the Spire -henkisen deck builderin backend-palvelu.
+- Aihe: Slay the Spire 2 peliin perustavan deck builderin backend-palvelu.
 - Erityishuomio: Toteutetaan AI-avusteisesti.
 - Käytettävä sovelluskehys: FastAPI (REST) + GraphQL-tuki.
 - Käytetty tietovarasto:
@@ -11,7 +11,7 @@
 - Lisäominaisuudet:
   - GraphQL-rajapinta RESTin rinnalla.
   - Dekkien analytiikka (adjusted DPT/BPT).
-  - Korttialias-resoluutio käytettävyyden parantamiseen.
+  - Korttialias-resoluutio.
 
 ## Yleiskuva
 Spire Deck Builder on FastAPI-pohjainen backend-sovellus, joka tarjoaa Slay the Spire -teemaiseen deck builderiin liittyvät API-toiminnot.
